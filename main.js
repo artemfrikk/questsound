@@ -1,9 +1,14 @@
 // QuestSound for Obsidian: the full QuestSound app in a side panel, controlled from notes and commands.
 // The panel is the hosted web app in a frame; notes talk to it with postMessage commands
 // ({lorescape: 'scene' | 'env' | 'mood' | 'fight' | 'sfx' | 'weather' | 'music' | 'stop', ...}).
-const { Plugin, ItemView, PluginSettingTab, Setting, Notice, SuggestModal, moment } = require('obsidian');
+const { Plugin, ItemView, PluginSettingTab, Setting, Notice, SuggestModal, moment, addIcon } = require('obsidian');
 
 const VIEW = 'lorescape-view';
+// The QuestSound mark (a d20 whose centre face is a play button), small-size master from brand/logo, 100×100 for addIcon.
+const ICON = '<g transform="scale(0.390625)" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">'
+  + '<path d="M232 128L180 37.93L76 37.93L24 128L76 218.07L180 218.07Z" stroke-width="24"/>'
+  + '<path d="M204.8 128L232 128M100.44 185.34L76 218.07M100.44 70.66L76 37.93" stroke-width="17"/>'
+  + '<path d="M180.8 128L114.8 166.11L114.8 89.89Z" fill="currentColor" stroke-width="25"/></g>';
 const DEFAULTS = { url: 'https://questsound.ru', lang: 'auto', autoUpdate: true, noteSound: true };
 // The server's former address: the panel opens there once more, carries its data over and lands on the new one.
 const OLD_URLS = ['https://lorescape.191-223-140-8.sslip.io'];
@@ -16,7 +21,7 @@ class QuestSoundView extends ItemView {
   constructor(leaf, plugin) { super(leaf); this.plugin = plugin; }
   getViewType() { return VIEW; }
   getDisplayText() { return 'QuestSound'; }
-  getIcon() { return 'music'; }
+  getIcon() { return 'questsound'; }
   async onOpen() {
     const box = this.contentEl; box.empty(); box.addClass('lorescape-view');
     const frame = box.createEl('iframe', { attr: { src: this.plugin.frameUrl(), allow: 'autoplay; clipboard-write; fullscreen', title: 'QuestSound' } });
@@ -78,7 +83,8 @@ module.exports = class QuestSoundPlugin extends Plugin {
     LANG = this.settings.lang !== 'auto' ? this.settings.lang : /^ru/i.test(moment.locale()) ? 'ru' : 'en';
     this.frame = null; this.ready = null; this.pending = new Map(); this.catalog = { scenes: [], sfx: [], envs: [], moods: [], weather: [], sets: [], cues: [] };
     this.registerView(VIEW, leaf => new QuestSoundView(leaf, this));
-    this.addRibbonIcon('music', L('Открыть QuestSound', 'Open QuestSound'), () => this.openView(true));
+    addIcon('questsound', ICON);
+    this.addRibbonIcon('questsound', L('Открыть QuestSound', 'Open QuestSound'), () => this.openView(true));
     this.registerDomEvent(window, 'message', e => this.onMessage(e));
 
     const cmd = (id, name, fn) => this.addCommand({ id, name, callback: fn });
