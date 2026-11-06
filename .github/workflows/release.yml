@@ -16,14 +16,14 @@ jobs:
   release:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - name: Tag matches the manifest version
         run: |
           v=$(jq -r .version manifest.json)
           [ "$v" = "$GITHUB_REF_NAME" ] || { echo "tag $GITHUB_REF_NAME != manifest $v"; exit 1; }
 
-      - uses: actions/attest-build-provenance@v2
+      - uses: actions/attest-build-provenance@v4
         with:
           subject-path: |
             main.js
