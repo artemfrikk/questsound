@@ -1,4 +1,5 @@
-.lorescape-view { padding: 0 !important; overflow: hidden; }
+/* the panel is the app itself: no padding around it (same pattern Obsidian uses for its own full-bleed views) */
+.workspace-leaf-content[data-type="lorescape-view"] .view-content.lorescape-view { padding: 0; overflow: hidden; }
 .lorescape-view iframe { width: 100%; height: 100%; border: 0; display: block; }
 
 .lorescape-buttons { display: flex; flex-wrap: wrap; gap: 8px; margin: 6px 0; }

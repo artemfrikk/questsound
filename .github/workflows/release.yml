@@ -1,0 +1,38 @@
+# Publishes a release when a version tag is pushed (the tag must equal manifest.json "version", e.g. 1.6.2).
+# The plugin files are committed as they are released, so there is no build step: the workflow attests
+# main.js, manifest.json and styles.css (GitHub artifact attestations) and attaches them to the release.
+name: Release
+
+on:
+  push:
+    tags: ['*']
+
+permissions:
+  contents: write
+  id-token: write
+  attestations: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Tag matches the manifest version
+        run: |
+          v=$(jq -r .version manifest.json)
+          [ "$v" = "$GITHUB_REF_NAME" ] || { echo "tag $GITHUB_REF_NAME != manifest $v"; exit 1; }
+
+      - uses: actions/attest-build-provenance@v2
+        with:
+          subject-path: |
+            main.js
+            manifest.json
+            styles.css
+
+      - name: Create the release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          notes=$(git tag -l --format='%(contents)' "$GITHUB_REF_NAME")
+          gh release create "$GITHUB_REF_NAME" main.js manifest.json styles.css --title "$GITHUB_REF_NAME" --notes "${notes:-QuestSound $GITHUB_REF_NAME}"
