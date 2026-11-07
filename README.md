@@ -2,6 +2,8 @@
 
 Music, ambience and sound effects for tabletop RPG sessions, right next to your campaign notes.
 
+![A session note with sound buttons and the QuestSound panel in the right side bar](https://raw.githubusercontent.com/artemfrikk/questsound/main/images/obsidian.jpg)
+
 QuestSound opens in the right side bar and keeps playing while you write. Your notes control it:
 
 - **Mood wheel**: pick joy, epic, sorrow, tension, dread, mystery, magic or humour, and how strong it should be. A separate set of combat tracks is one button away.
@@ -12,7 +14,27 @@ QuestSound opens in the right side bar and keeps playing while you write. Your n
 
 The interface follows Obsidian's language (English or Russian). Note commands accept names in either language.
 
-![QuestSound panel](https://questsound.ru/img/wheel.jpg)
+## Mood wheel
+
+The direction picks the mood, the distance from the centre picks how strong it is: near the edge the music plays at full power, near the centre it is softer.
+
+![The mood wheel set to Epic](https://raw.githubusercontent.com/artemfrikk/questsound/main/images/wheel.jpg)
+
+**Combat** switches to battle tracks of the same mood. The whole panel turns red while the fight lasts, so you can see at a glance that combat music is on.
+
+![The same mood in combat: Epic battle](https://raw.githubusercontent.com/artemfrikk/questsound/main/images/combat.jpg)
+
+## Environments and weather
+
+Each environment is a mix of real recordings: fire, crowd, rain on the roof, wind, birds. Click one and it fades in over the current one. Day or night, crowd size and weather are set below; every layer has its own volume.
+
+![81 environments: tavern, forest, cave, crystal grotto and more](https://raw.githubusercontent.com/artemfrikk/questsound/main/images/environments.jpg)
+
+## Sound effects
+
+Sword clash, fireball, thunder, a monster's roar: one click, or keys 1–0 for the sounds you star. Each card plays a random take, so a repeated hit doesn't sound the same twice.
+
+![76 sound effects in categories: combat, magic, creatures, world, tavern, signals, sci-fi, occult](https://raw.githubusercontent.com/artemfrikk/questsound/main/images/sounds.jpg)
 
 ## Buttons in notes
 
